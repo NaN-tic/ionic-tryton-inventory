@@ -1,0 +1,48 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title> {{'Location' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding overflow-scroll="true">
+    <ion-list>
+
+      <ion-item>
+        <ion-label color="primary"> {{'Location' | translate}} :</ion-label>
+        <ion-input id="location_input" #locationInput2
+        [(ngModel)]="itemInput"
+        [readonly]="true" autofocus>
+        </ion-input>
+        <button (click)="clearInput()" ion-button icon-only
+          class="zero_button">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-item>
+     	<button ion-item *ngFor="let i of list_items" (click)="itemSelected($event, i)">
+      	{{i.name}}
+        <div item-content>
+        {{i.code}}
+        </div>
+     	</button>-
+   	</ion-list>
+
+   	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+     	<ion-infinite-scroll-content></ion-infinite-scroll-content>
+   	</ion-infinite-scroll>
+
+</ion-content>
+
+<ion-footer>
+  	<ion-toolbar color="primary">
+	  	<ion-buttons left>
+		  <ion-icon name="ion-ios-arrow-back"></ion-icon>
+	  	</ion-buttons>
+	  	<ion-buttons right>
+  		  <button [disabled]="!elementInput" ion-button icon-right (click)="goForward()">
+  		    {{'Done' | translate}}
+  		  </button>
+  		  <ion-icon name="ion-ios-arrow-forward"></ion-icon>
+	  	</ion-buttons>
+	</ion-toolbar>
+</ion-footer>
