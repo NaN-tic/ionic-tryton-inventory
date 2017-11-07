@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { MenuPage } from '../../ngx-menu/menu'
-import { InventoriesPage } from '../inventory/inventories'
+import { InventoriesPage } from '../inventories/inventories'
 import { Routing } from '../../../pages/routing/routing';
 
 
