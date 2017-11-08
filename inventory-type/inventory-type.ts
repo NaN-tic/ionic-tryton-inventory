@@ -9,15 +9,14 @@ import { Routing } from '../../../pages/routing/routing';
   selector: 'page-inventory-type',
   templateUrl: '../../ngx-menu/menu.html'
 })
+
 /**
  * This class creates the main menu for the inventories.
  * The user can choose between creating a new inventory or looking at one
  * already created
  */
 export class InventoryTypePage extends MenuPage {
-
   constructor(navCtrl: NavController, private navParams: NavParams) {
-
     super(navCtrl)
     this.title = 'Inventory Type'
     /**

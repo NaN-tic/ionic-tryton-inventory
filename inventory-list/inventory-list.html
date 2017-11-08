@@ -5,60 +5,58 @@
 </ion-header>
 
 <ion-content padding overflow-scroll="true">
-    <div class="input_field">
-      <ion-list>
-        <ion-item>
-        
-        <ion-label color="primary"> {{'Product' | translate}}  : </ion-label>
-        <ion-input id="test" #focusInput2
-        [(ngModel)]="itemInput">{{itemInput}}</ion-input>
-        <button (click)="clearInput()" ion-button icon-only
-          class="zero_button">
-          <ion-icon name="close"></ion-icon>
-        </button>
-          </ion-item>
-      </ion-list>
-    </div>
+  <div class="input_field">
+    <ion-list>
+      <ion-item>
 
-    <ion-grid>
-      <ion-row class="item-divider">
-         <ion-col width-75>
-            <strong class="table_labels">{{'Product' | translate}}</strong>
-          </ion-col>
-          <ion-col width-25>
-            <strong class="quantity">{{'Quantity' | translate}}</strong>
-          </ion-col>
-        </ion-row>
-      <ion-row class="success" *ngFor="let item of item_array; let i = index">
-          <ion-col width-70>{{item.product.name}}</ion-col>
-          <ion-col width-20>
-            <p class="quantity"> {{item.quantity}} </p>
-          </ion-col>
-          <ion-col width-10>
-            <button (click)="setLineZero(item, i)" ion-button icon-only
-              class="zero_button">
-              <ion-icon name="close"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-label color="primary"> {{'Product' | translate}}  : </ion-label>
+      <ion-input id="test" #focusInput2
+      [(ngModel)]="itemInput">{{itemInput}}</ion-input>
+      <button (click)="clearInput()" ion-button icon-only
+        class="zero_button">
+        <ion-icon name="close"></ion-icon>
+      </button>
+        </ion-item>
+    </ion-list>
+  </div>
 
-
+  <ion-grid>
+    <ion-row class="item-divider">
+       <ion-col width-75>
+          <strong class="table_labels">{{'Product' | translate}}</strong>
+        </ion-col>
+        <ion-col width-25>
+          <strong class="quantity">{{'Quantity' | translate}}</strong>
+        </ion-col>
+      </ion-row>
+    <ion-row class="success" *ngFor="let item of item_array; let i = index">
+        <ion-col width-70>{{item.product.name}}</ion-col>
+        <ion-col width-20>
+          <p class="quantity"> {{item.quantity}} </p>
+        </ion-col>
+        <ion-col width-10>
+          <button (click)="setLineZero(item, i)" ion-button icon-only
+            class="zero_button">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 </ion-content>
 
 <ion-footer>
-  	<ion-toolbar color="primary">
-	  	<ion-buttons left>
-		  <ion-icon name="ion-ios-arrow-back"></ion-icon>
-	  	</ion-buttons>
-      <ion-buttons right >
-  		  <button [hidden]="saved" [disabled]="elementInput" ion-button icon-right (click)="save()">
-  		    {{'Save' | translate}}
-  		  </button>
-        <button  [hidden]="!saved" ion-button icon-right (click)="confirm()">
-  		    {{'Confirm' | translate}}
-  		  </button>
-  		  <ion-icon name="ion-ios-arrow-forward"></ion-icon>
-	  	</ion-buttons>
-	</ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons left>
+      <ion-icon name="ion-ios-arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-buttons right >
+      <button [hidden]="saved" [disabled]="elementInput" ion-button icon-right (click)="save()">
+        {{'Save' | translate}}
+      </button>
+      <button  [hidden]="!saved" ion-button icon-right (click)="confirm()">
+        {{'Confirm' | translate}}
+      </button>
+      <ion-icon name="ion-ios-arrow-forward"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-footer>

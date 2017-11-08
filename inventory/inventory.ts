@@ -5,7 +5,6 @@ import { MenuPage } from '../../ngx-menu/menu'
 import { InventoriesPage } from '../inventories/inventories'
 import { Routing } from '../../../pages/routing/routing';
 
-
 @Component({
   selector: 'page-inventory',
   templateUrl: '../../ngx-menu/menu.html'
@@ -16,10 +15,10 @@ import { Routing } from '../../../pages/routing/routing';
  * already created
  */
 export class InventoryPage extends MenuPage {
-
   constructor(navCtrl: NavController) {
     super(navCtrl)
     this.title = 'Inventarios'
+
     /**
      * New menus go here,
      * params = true means we are creating a new inventory.

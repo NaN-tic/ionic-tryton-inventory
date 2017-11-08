@@ -5,16 +5,14 @@ import { Keyboard } from 'ionic-native';
 import { InfiniteList } from '../../ngx-tryton-infinite-list/infinite-list'
 import { EncodeJSONRead } from '../../ngx-tryton-json/encode-json-read'
 import { TrytonProvider } from '../../ngx-tryton-providers/tryton-provider'
-// Interfaces
-import { Location } from '../../../models/location'
 
 import { Routing } from '../../../pages/routing/routing';
-
 
 @Component({
   selector: 'location-inventory-page',
   templateUrl: 'location-inventory.html',
 })
+
 /**
  * This class extends the infinite list class to create a list of the possible
  * locations. Besides choosing a location from the list the user can also
@@ -22,23 +20,16 @@ import { Routing } from '../../../pages/routing/routing';
  * valid or it is not
  */
 export class LocationInventoryPage extends InfiniteList implements AfterViewInit{
-
-  @Input()
   itemInput: string = '';
-
   location_code: string = '';
   @ViewChild('focusInput') myInput;
-  item: string
-
-
+  item: string;
   elementInput: boolean = false;
-
   location: Location;
-
   blur_element: boolean;
 
   constructor(public navCtrl: NavController, public trytond_provider: TrytonProvider,
-  		public navParams: NavParams, public events: Events) {
+      public navParams: NavParams, public events: Events) {
     super(navCtrl, trytond_provider, events)
 
     console.log("data", navParams.get('params'))
@@ -59,11 +50,11 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
     Keyboard.close()
   }
    blurInput(event){
-       if (this.blur_element){
-            document.getElementById('test').focus()
-            //Keyboard.close()
-        }
-        this.blur_element = false;
+     if (this.blur_element){
+        document.getElementById('test').focus()
+        //Keyboard.close()
+      }
+      this.blur_element = false;
    }
    ionViewDidEnter() {
      console.log("Inside view");
@@ -74,13 +65,15 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
    setFocus(event) {
      console.log("Focus set")
    }
-       /**
+
+   /**
    * Clears the input
    */
     public clearInput(): void{
     this.itemInput = '';
     this.location_code = '';
   }
+
   /**
    * Gets called when a location from the list is selected
    * @param {Object} event   Event description
@@ -90,9 +83,10 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
   itemSelected(event, item) {
     console.log("Item selected", item, "Going to next page", this.navParams.get('param'))
     this.navCtrl.push(new Routing().getNext(this.constructor.name), { params: {
-        location: item,
-        new_inventory: true}} )
+      location: item,
+      new_inventory: true}} )
   }
+
   /**
    * Go to the next stage, check if the entered location is valid
    */
@@ -115,7 +109,7 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
           this.itemInput = '';
           this.location_code = '';
 
-          this.navCtrl.setRoot(new Routing().getNext(this.constructor.name), { params: {
+          this.navCtrl.push(new Routing().getNext(this.constructor.name), { params: {
               location: this.location[0],
               new_inventory: true}} )
         }

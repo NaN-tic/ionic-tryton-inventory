@@ -10,14 +10,14 @@ import { TrytonProvider } from '../../ngx-tryton-providers/tryton-provider'
 
 import { Products } from '../../ngx-tryton-product-interface/products'
 import { Inventory, InventoryLines } from '../../ngx-tryton-stock-interface/inventory'
-
+import { MainMenuPage } from '../../../pages/main-menu/main-menu'
 
 @Component({
   selector: 'page-inventory-list',
   templateUrl: 'inventory-list.html'
 })
-export class InventoryListPage {
 
+export class InventoryListPage {
   @Input()
   itemInput: string = '';
   /**
@@ -25,7 +25,6 @@ export class InventoryListPage {
    * @type {string}
    */
   barcode: string = '';
-
   @ViewChild('focusInput2') myInput2: ElementRef;
   lastItem: string;
   /**
@@ -33,12 +32,10 @@ export class InventoryListPage {
    * @type {InventoryLines[]}
    */
   item_array: InventoryLines[] = [];
-
   product: Products;
   location: Location;
   inventory: Inventory;
   inventory_line: InventoryLines;
-
   local_storage = this.locker.useDriver(Locker.DRIVERS.LOCAL)
   loading: any;
   /**
@@ -59,9 +56,7 @@ export class InventoryListPage {
    */
   saved: boolean = false;
   not_checking: boolean = true;
-
   inventory_fields: Array<string> = [];
-
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
@@ -85,8 +80,7 @@ export class InventoryListPage {
       this.saved = true;
       this.inventory = params.inventory
       this.fetchInventoryData(this.location, this.inventory)
-    }
-    else {
+    } else {
       // Remove preovious view, this will force the stack to to go back
       // to the location-inventory view
       //navCtrl.remove(navCtrl.length() - 1)
@@ -97,7 +91,7 @@ export class InventoryListPage {
         location: navParams.get('params').location,
         state: "draft",
         id: -1,
-        lost_found: 7,
+        lost_found: 7, // TODO: hardcode lost found ID location
         lines: []
       }
       this.save();
@@ -115,11 +109,11 @@ export class InventoryListPage {
       console.log("Creating new inventory", this.inventory)
     }
   }
+
   /**
-   * Asks the suer if he/she wants to leave the view
+   * Asks the user if he/she wants to leave the view
    * @return {Promise<any>} True or false
    */
-
   ionViewCanLeave(): Promise<any> {
     console.log("Saving", this.saved)
     if (!this.saved) {
@@ -217,6 +211,7 @@ export class InventoryListPage {
         console.log("A wild error was found", error);
       })
   }
+
   /**
    * Searchs the given ID and stores its code.
    * @param {string} product_ids id of the product
@@ -250,8 +245,8 @@ export class InventoryListPage {
   }
 
   /**
-   * Checks wether or not the given barcode exisit in the system and adds
-   * a quantity to it if it already exisit or adds it to the list
+   * Checks wether or not the given barcode exists in the system and adds
+   * a quantity to it if it already exists or adds it to the list
    * @param  {string}  data barcode or quantity to add
    * @return {boolean}      True if completed correctly
    */
@@ -271,6 +266,7 @@ export class InventoryListPage {
     }
     return true;
   }
+
   /**
    * Sets the quantity for a given code
    * @param  {string} item_code    Code of the item to look for.
@@ -310,12 +306,12 @@ export class InventoryListPage {
     }
     return false;
   }
+
   /**
    * Gets the data from the given product barcode
    * @param {string} barcode Bar code number of a product
    */
   public getProduct(barcode: string) {
-
     let json_constructor = new EncodeJSONRead;
     let method = "product.product";
     let fields = ["name", "rec_name"];
@@ -394,7 +390,6 @@ export class InventoryListPage {
    *                       YYYY-MM-DD HH:mm:ss
    */
   private format_date(date) {
-
     let start_year = date.getUTCFullYear();
     let start_month = date.getUTCMonth() + 1;
     let start_day = date.getUTCDate();
@@ -477,6 +472,7 @@ export class InventoryListPage {
         )
     })
   }
+
   /**
    * Saves the current inventory into tryton.
    * Inventories with no products are not saved
@@ -559,6 +555,8 @@ export class InventoryListPage {
     this.trytonProvider.write(lines).subscribe(
       data => {
         this.saved = true;
+        this.item_array = []
+        this.fetchInventoryData(this.location, this.inventory);
         alert('Inventario actualizado')
       },
       error => {
@@ -566,6 +564,7 @@ export class InventoryListPage {
         alert(error.messages[0])
       })
   }
+
   /**
    * Confirms the current inventory.
    */
@@ -576,7 +575,7 @@ export class InventoryListPage {
       this.trytonProvider.rpc_call("model.stock.inventory.confirm",
         [[id]]).subscribe(
         data => {
-          this.navCtrl.pop();
+          this.navCtrl.setRoot(MainMenuPage);
         },
         error => {
           console.log("An error occurred", error)
@@ -593,21 +592,7 @@ export class InventoryListPage {
     });
   }
 
-  /**
-   * Creats an object with the values to save
-   * @param {any} line Line to save
-   */
-  private valuesLinesToSave(line: any) {
-      let values = {
-          inventory: this.inventory.id,
-          product: line.product.id,
-          quantity: line.quantity,
-      }
-      return values
-  }
-
   public keyboardInput(event: KeyboardEvent) {
-
     if( event.keyCode == 13) {
       this.itemInput = this.barcode
     }
