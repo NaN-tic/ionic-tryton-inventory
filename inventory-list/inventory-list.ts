@@ -106,7 +106,6 @@ export class InventoryListPage {
           events.unsubscribe('Save procedure completed');
         })
       }
-      console.log("Creating new inventory", this.inventory)
     }
   }
 
@@ -208,7 +207,6 @@ export class InventoryListPage {
         this.search_code(product_ids)
       },
       error => {
-        console.log("A wild error was found", error);
       })
   }
 
@@ -276,7 +274,6 @@ export class InventoryListPage {
    * @return {boolean}             True if an item was found
    */
   private setProductQuantity(item_code: string, set_quantity: number) {
-    console.log("Item quantity", item_code, set_quantity)
     if (set_quantity == NaN) return false;
 
     for (let line of this.item_array) {
@@ -345,7 +342,6 @@ export class InventoryListPage {
         this.saved = false;
       },
       error => {
-        console.log("Error", error);
         this.translateService.get('The product does not exists').subscribe(
           value => {
             let alertTitle = value;
@@ -417,7 +413,6 @@ export class InventoryListPage {
    * Only present during the beggining of the view
    */
   private showLoading() {
-    console.log("Showing loading")
     let loading_text;
     this.translateService.get('Loading').subscribe(
       value => {

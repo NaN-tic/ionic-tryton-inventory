@@ -25,7 +25,6 @@ export class InventoryTypePage extends MenuPage {
      * @type {Array}
      */
     let params = navParams.get('params')
-    console.log("Location", location)
     this.menu = [
       { name: "Products_Inventory",
         page: new Routing().getNext(this.constructor.name),

@@ -31,10 +31,7 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
   constructor(public navCtrl: NavController, public trytond_provider: TrytonProvider,
       public navParams: NavParams, public events: Events) {
     super(navCtrl, trytond_provider, events)
-
-    console.log("data", navParams.get('params'))
     this.method = "stock.location";
-
     this.domain = [new EncodeJSONRead().createDomain("type",
       "=", "storage")];
     this.fields = ["name", "code"]
@@ -57,9 +54,7 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
       this.blur_element = false;
    }
    ionViewDidEnter() {
-     console.log("Inside view");
      this.blur_element = true;
-     //document.getElementById('test').focus();
      Keyboard.close()
    }
    setFocus(event) {
@@ -102,7 +97,6 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
 
     this.trytond_provider.search(json).subscribe(
       data => {
-        console.log("Location exists", data[method], data[method].length, data[method] > 0);
         if (data[method].length > 0) {
           this.location = data[method];
           // Clear input field
@@ -129,7 +123,6 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
    * @param {Object} event Event description
    */
   inputChange(event) {
-    console.log("INput changed")
     if (this.itemInput){
       this.elementInput = true;
       this.goForward();

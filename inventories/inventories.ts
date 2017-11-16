@@ -52,7 +52,6 @@ export class InventoriesPage extends InfiniteList{
     * @returns                Go to the next page
     */
   itemSelected(event, item){
-    console.log("Item selected", item, "Going to next page", this.navParams.get('param'))
 
     this.location = {
       name: item['location.name'],
@@ -68,8 +67,6 @@ export class InventoriesPage extends InfiniteList{
       lost_found: 7, // TODO: hardcode lost found ID location
       id: item.id
     }
-    console.log("Item selected", item)
-    console.log("Creating location and inventory", this.location, this.inventory)
     this.navCtrl.push(new Routing().getNext(this.constructor.name), {params:
       {
         location: this.location,
@@ -84,7 +81,6 @@ export class InventoriesPage extends InfiniteList{
    * Shows a loading component on top of the view
    */
   private showLoading() {
-    console.log("Showing loading")
     let loading_text;
     this.translateService.get('Loading').subscribe(
       value => {
@@ -102,7 +98,6 @@ export class InventoriesPage extends InfiniteList{
    * Hides the current loading component on the screen
    */
   private hideLoading() {
-    console.log("Dismissing loading")
     this.events.subscribe("Data loading finished", (eventData) => {
       this.loading.dismiss();
     })
