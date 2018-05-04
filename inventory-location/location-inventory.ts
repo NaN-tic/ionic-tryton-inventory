@@ -1,8 +1,8 @@
-import { Component, ViewChild, Input, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController, NavParams, Events } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
 
-import { InfiniteList } from '../../ngx-tryton-infinite-list/infinite-list'
+import { InfiniteList } from '../../ionic-tryton-infinite-list/infinite-list'
 import { EncodeJSONRead } from '../../ngx-tryton-json/encode-json-read'
 import { TrytonProvider } from '../../ngx-tryton-providers/tryton-provider'
 

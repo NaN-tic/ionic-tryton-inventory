@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { MenuPage } from '../../ngx-menu/menu'
+import { MenuPage } from '../../ionic-menu/menu'
 import { InventoriesPage } from '../inventories/inventories'
 import { Routing } from '../../../pages/routing/routing';
 
 @Component({
   selector: 'page-inventory',
-  templateUrl: '../../ngx-menu/menu.html'
+  templateUrl: '../../ionic-menu/menu.html'
 })
 /**
  * This class creates the main menu for the inventories.
@@ -17,7 +17,7 @@ import { Routing } from '../../../pages/routing/routing';
 export class InventoryPage extends MenuPage {
   constructor(navCtrl: NavController) {
     super(navCtrl)
-    this.title = 'Inventarios'
+    this.title = 'Inventory'
 
     /**
      * New menus go here,

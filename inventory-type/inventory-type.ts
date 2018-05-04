@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { MenuPage } from '../../ngx-menu/menu'
+import { MenuPage } from '../../ionic-menu/menu'
 
 import { Routing } from '../../../pages/routing/routing';
 
 @Component({
   selector: 'page-inventory-type',
-  templateUrl: '../../ngx-menu/menu.html'
+  templateUrl: '../../ionic-menu/menu.html'
 })
 
 /**

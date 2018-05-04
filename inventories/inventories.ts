@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, LoadingController } from 'ionic-angular';
+import { NavController, Events, LoadingController } from 'ionic-angular';
 import { Locker } from 'angular-safeguard';
 import {TranslateService} from 'ng2-translate';
 
-
-import { InfiniteList } from '../../ngx-tryton-infinite-list/infinite-list'
+import { InfiniteList } from '../../ionic-tryton-infinite-list/infinite-list'
 import { EncodeJSONRead } from '../../ngx-tryton-json/encode-json-read'
 import { TrytonProvider } from '../../ngx-tryton-providers/tryton-provider'
 import { Inventory } from '../../ngx-tryton-stock-interface/inventory'
@@ -29,7 +28,7 @@ export class InventoriesPage extends InfiniteList{
 
   constructor(public navCtrl: NavController,
       public trytond_provider: TrytonProvider,
-      private navParams: NavParams, public locker: Locker,
+      public locker: Locker,
       public events: Events, private loadingCtrl: LoadingController,
       private translateService: TranslateService) {
     super(navCtrl, trytond_provider, events)
