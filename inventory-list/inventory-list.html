@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title class="title_ion"> {{'Inventory' | translate}}: {{ location.name }} </ion-title>
+    <ion-title class="title_ion">{{'Inventory' | translate}}: {{ location.name }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item>
 
-      <ion-label color="primary"> {{'Product' | translate}}  : </ion-label>
+      <ion-label color="primary">{{'Product' | translate}}:</ion-label>
       <ion-input id="test" #focusInput2
       [(ngModel)]="itemInput">{{itemInput}}</ion-input>
       <button (click)="clearInput()" ion-button icon-only
@@ -32,7 +32,7 @@
     <ion-row class="success" *ngFor="let item of item_array; let i = index">
         <ion-col width-70>{{item.product.name}}</ion-col>
         <ion-col width-20>
-          <p class="quantity"> {{item.quantity}} </p>
+          <p class="quantity">{{item.quantity}}</p>
         </ion-col>
         <ion-col width-10>
           <button (click)="setLineZero(item, i)" ion-button icon-only

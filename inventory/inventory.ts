@@ -25,7 +25,7 @@ export class InventoryPage extends MenuPage {
      * @type {Array}
      */
     this.menu = [
-      { name: "Inventories", page: new Routing().getNext('INVENTORY_LOCATION_MENU'), params: true },
+      { name: "New Inventory", page: new Routing().getNext('INVENTORY_LOCATION_MENU'), params: true },
       { name: "Inventory List", page: InventoriesPage, params: false }
     ]
   }
