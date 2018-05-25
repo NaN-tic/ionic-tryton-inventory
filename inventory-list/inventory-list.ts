@@ -86,7 +86,6 @@ export class InventoryListPage {
       //navCtrl.remove(navCtrl.length() - 1)
       let current_date = new Date()
       this.inventory = {
-        company: this.local_storage.get('UserData').company,
         date: this.format_date(current_date),
         location: navParams.get('params').location,
         state: "draft",
