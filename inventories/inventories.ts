@@ -36,10 +36,8 @@ export class InventoriesPage extends InfiniteList{
     this.method = "stock.inventory";
 
     // TODO: might need to change and look for location
-    this.domain = [new EncodeJSONRead().createDomain("state",
-        "=", "draft")];
-    this.fields = ["date", "company", "location.name", "location.code",
-    "location.parent.name", "location", "state"];
+    this.domain = [new EncodeJSONRead().createDomain("state", "=", "draft")];
+    this.fields = ['date', 'location:["name", "code"]', 'state'];
     this.showLoading()
     this.loadData()
   }

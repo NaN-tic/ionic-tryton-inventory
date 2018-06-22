@@ -171,8 +171,7 @@ export class InventoryListPage {
     let json_constructor = new EncodeJSONRead;
     let method = "stock.inventory.line";
     let fields = this.inventory_fields;
-    let domain = [json_constructor.createDomain(
-      "inventory", "=", inventory.id)];
+    let domain = [json_constructor.createDomain("inventory", "=", inventory.id)];
 
     json_constructor.addNode(method, domain, fields);
     let json = json_constructor.createJson();
@@ -183,9 +182,9 @@ export class InventoryListPage {
         for (let line of data[method]) {
           this.product = {
             name: line['product.name'],
-            codes_number: [],
-            rec_name: line.rec_name,
-            id: line.product
+            codes_number: [line['product.code']],
+            rec_name: line['product.rec_name'],
+            id: line['product.id']
           }
           product_ids.push(this.product.id)
           this.inventory_line = {
@@ -194,16 +193,16 @@ export class InventoryListPage {
             expected_quantity: line.expected_quantity,
             id: line.id
           }
-          this.item_array.push(this.inventory_line)
-          this.inventory.lines.push(this.inventory_line)
+          this.item_array.push(this.inventory_line);
+          this.inventory.lines.push(this.inventory_line);
         }
         this.events.publish("Fetch complete")
-        this.hideLoading()
+        this.hideLoading();
         /* We gather all the data to display it and then we get all the barcodes
          * This is so its gonna be faster to givve the user feedback by displaying
          * the products than waiting a longer for the barcodes
          */
-        this.search_code(product_ids)
+        this.search_code(product_ids);
       },
       error => {
       })
@@ -217,8 +216,7 @@ export class InventoryListPage {
     let json_constructor = new EncodeJSONRead;
     let method = "product.code";
     let fields = ["product", "number"];
-    let domain = [json_constructor.createDomain(
-      "product", "in", product_ids)];
+    let domain = [json_constructor.createDomain("product", "in", product_ids)];
 
     json_constructor.addNode(method, domain, fields);
     let json = json_constructor.createJson();
@@ -250,11 +248,11 @@ export class InventoryListPage {
   public checkInput(event): boolean {
     if (this.barcode.length >= 5) {
       if (!this.setProductQuantity(this.barcode, 1)){
-          if (!this.getProduct(this.barcode))
+          if (!this.getProduct(this.barcode)){
             return false;
+          }
         }
-    }
-    else if (this.barcode.length < 5) {
+    } else if (this.barcode.length < 5) {
       // Should never show the alert
       if (!this.setProductQuantity(this.lastItem, Number(this.barcode))){
         alert('No se ha podido encontrar el producto')
@@ -276,7 +274,7 @@ export class InventoryListPage {
     if (set_quantity == NaN) return false;
 
     for (let line of this.item_array) {
-      if (line.product.codes_number.indexOf(item_code.toString()) >= 0) {
+      if (line.product.codes_number.indexOf(item_code) >= 0) {
         if (this.barcode.length > 5) {
           line.quantity += set_quantity;
           this.lastItem = this.barcode;
@@ -311,8 +309,7 @@ export class InventoryListPage {
     let json_constructor = new EncodeJSONRead;
     let method = "product.product";
     let fields = ["name", "rec_name"];
-    let domain = [json_constructor.createDomain(
-      'rec_name', '=', barcode)];
+    let domain = [json_constructor.createDomain('code', '=', barcode)];
 
     json_constructor.addNode(method, domain, fields);
     let json = json_constructor.createJson();
@@ -374,8 +371,7 @@ export class InventoryListPage {
   }
 
   public setDefaultFields(){
-      this.inventory_fields = ["product.name", "product.rec_name", "product.codes",
-        "product", "quantity", "expected_quantity"];
+    this.inventory_fields = ['product:["rec_name", "name", "code"]', 'quantity', 'expected_quantity'];
   }
 
   /**
@@ -428,10 +424,12 @@ export class InventoryListPage {
    * Hides the current loading component on the screen
    */
   private hideLoading() {
-    this.loading.dismiss();
-    // Send event to cancel timeout
-    this.events.publish("Loading done")
-    //this.myInput2.setFocus();
+    if (this.loading) {
+      this.loading.dismiss();
+      // Send event to cancel timeout
+      this.events.publish("Loading done")
+      //this.myInput2.setFocus();
+    }
   }
 
   /**
