@@ -15,7 +15,7 @@
    <ion-list>
      <ion-item class="i.state" (click)="itemSelected($event, i)" *ngFor="let i of list_items">
       {{i['location.name']}}
-      <p>{{i.date}}</p>
+      <p>{{ i.date['day'] }}/{{ i.date['month'] }}/{{ i.date['year'] }}</p>
      </ion-item>
    </ion-list>
 

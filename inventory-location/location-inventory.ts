@@ -32,8 +32,7 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
       public navParams: NavParams, public events: Events) {
     super(navCtrl, trytond_provider, events)
     this.method = "stock.location";
-    this.domain = [new EncodeJSONRead().createDomain("type",
-      "=", "storage")];
+    this.domain = [new EncodeJSONRead().createDomain("type", "=", "storage")];
     this.fields = ["name", "code"]
     this.loadData();
     this.blur_element = true;
@@ -88,8 +87,7 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
   goForward() {
     console.log("Searching for code", this.itemInput);
     let json_constructor = new EncodeJSONRead();
-    let search_domain = [json_constructor.createDomain(
-      "rec_name", "=", this.itemInput)]
+    let search_domain = [json_constructor.createDomain("rec_name", "=", this.itemInput)]
     let fields = ['name', 'code']
     let method = "stock.location"
     json_constructor.addNode(method, search_domain, fields)
