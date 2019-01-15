@@ -73,8 +73,7 @@ export class InventoryListPage {
     this.blur_element = true;
     this.setDefaultFields();
 
-    if (this.new_inventory.constructor.name != 'Object' &&
-        this.new_inventory == false) {
+    if (this.new_inventory.constructor.name != 'Object' && this.new_inventory == false) {
       this.showLoading();
       this.not_checking = false;
       this.saved = true;
@@ -88,9 +87,9 @@ export class InventoryListPage {
       this.inventory = {
         date: this.format_date(current_date),
         location: navParams.get('params').location,
+        lost_found: navParams.get('params').lost_found || 7,
         state: "draft",
         id: -1,
-        lost_found: 7, // TODO: hardcode lost found ID location
         lines: []
       }
       this.save();
@@ -482,8 +481,8 @@ export class InventoryListPage {
     let values = {
       company: this.inventory.company,
       location: this.inventory.location.id,
-      date: this.inventory.date,
-      lost_found: this.inventory.lost_found
+      lost_found: this.inventory.lost_found.id,
+      date: this.inventory.date
     }
     json_constructor.addNode(method, [id, values])
     let json = json_constructor.createJSON()
