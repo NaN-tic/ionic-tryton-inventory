@@ -21,6 +21,7 @@ import { Routing } from '../../../pages/routing/routing';
  */
 export class LocationInventoryPage extends InfiniteList implements AfterViewInit{
   itemInput: string = '';
+  lostInput: string = '';
   location_code: string = '';
   @ViewChild('focusInput') myInput;
   item: string;
@@ -32,39 +33,41 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
       public navParams: NavParams, public events: Events) {
     super(navCtrl, trytond_provider, events)
     this.method = "stock.location";
-    this.domain = [new EncodeJSONRead().createDomain("type",
-      "=", "storage")];
-    this.fields = ["name", "code"]
+    this.domain = [new EncodeJSONRead().createDomain("type", "=", "storage")];
+    this.fields = ["name", "code"];
     this.loadData();
     this.blur_element = true;
     this.elementInput = false;
   }
 
   ngAfterViewInit() {
-    console.log("set input")
+    // console.log("set input");
 
     //document.getElementById('test').focus()
     Keyboard.close()
   }
-   blurInput(event){
-     if (this.blur_element){
-        document.getElementById('test').focus()
-        //Keyboard.close()
-      }
-      this.blur_element = false;
-   }
-   ionViewDidEnter() {
-     this.blur_element = true;
-     Keyboard.close()
-   }
-   setFocus(event) {
-     console.log("Focus set")
-   }
 
-   /**
-   * Clears the input
-   */
-    public clearInput(): void{
+  blurInput(event){
+    if (this.blur_element){
+      document.getElementById('test').focus()
+      //Keyboard.close()
+    }
+    this.blur_element = false;
+  }
+
+  ionViewDidEnter() {
+   this.blur_element = true;
+   Keyboard.close()
+  }
+
+  setFocus(event) {
+   console.log("Focus set");
+  }
+
+ /**
+ * Clears the input
+ */
+  public clearInput(): void{
     this.itemInput = '';
     this.location_code = '';
   }
@@ -76,7 +79,6 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
    * @returns                Go to the next page
    */
   itemSelected(event, item) {
-    console.log("Item selected", item, "Going to next page", this.navParams.get('param'))
     this.navCtrl.push(new Routing().getNext(this.constructor.name), { params: {
       location: item,
       new_inventory: true}} )
@@ -86,30 +88,45 @@ export class LocationInventoryPage extends InfiniteList implements AfterViewInit
    * Go to the next stage, check if the entered location is valid
    */
   goForward() {
-    console.log("Searching for code", this.itemInput);
+    // console.log("Searching for code", this.itemInput, this.lostInput);
     let json_constructor = new EncodeJSONRead();
-    let search_domain = [json_constructor.createDomain(
-      "rec_name", "=", this.itemInput)]
-    let fields = ['name', 'code']
-    let method = "stock.location"
-    json_constructor.addNode(method, search_domain, fields)
-    let json = json_constructor.createJson()
+    let search_domain = [json_constructor.createDomain("name", "in", [this.itemInput, this.lostInput])];
+    let fields = ['name', 'code', 'type'];
+    let method = "stock.location";
+    json_constructor.addNode(method, search_domain, fields);
+    let json = json_constructor.createJson();
 
     this.trytond_provider.search(json).subscribe(
       data => {
-        if (data[method].length > 0) {
-          this.location = data[method];
-          // Clear input field
-          this.itemInput = '';
-          this.location_code = '';
-
-          this.navCtrl.push(new Routing().getNext(this.constructor.name), { params: {
-              location: this.location[0],
-              new_inventory: true}} )
-        }
-        else{
+        let storage = undefined;
+        let lost_found = undefined;
+        if (data[method].length === 2) {
+          for (let location of data[method]) {
+            if (location['type'] == 'storage') {
+              storage = location;
+            }
+            if (location['type'] == 'lost_found') {
+              lost_found = location;
+            }
+          }
+          if ((lost_found != undefined) && (storage != undefined)) {
+              this.itemInput = '';
+              this.lostInput = '';
+              this.location_code = '';
+              this.navCtrl.push(new Routing().getNext(this.constructor.name), { params: {
+                  location: storage,
+                  lost_found: lost_found,
+                  new_inventory: true}} )
+          } else {
+            alert("Incorrect Location");
+            this.itemInput = '';
+            this.lostInput = '';
+            this.location_code = '';
+          }
+        } else{
           alert("Incorrect Location");
           this.itemInput = '';
+          this.lostInput = '';
           this.location_code = '';
         }
       },

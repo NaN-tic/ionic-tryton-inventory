@@ -22,6 +22,7 @@ import { Routing } from '../../../pages/routing/routing';
 export class InventoriesPage extends InfiniteList{
   inventory: Inventory;
   location: Location;
+  lost_found: Location;
   title: string;
   local_storage = this.locker.useDriver(Locker.DRIVERS.LOCAL)
   loading: any;
@@ -63,7 +64,7 @@ export class InventoriesPage extends InfiniteList{
       date: item.date,
       state: item.state,
       location: this.location,
-      lost_found: 7, // TODO: hardcode lost found ID location
+      lost_found: this.lost_found,
       id: item.id
     }
     this.navCtrl.push(new Routing().getNext(this.constructor.name), {params:

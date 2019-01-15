@@ -29,12 +29,20 @@ export class InventoryTypePage extends MenuPage {
       {
         name: "Products Inventory",
         page: new Routing().getNext(this.constructor.name),
-        params: {location:params.location, new_inventory: true, products_inventory: true}
+        params: {
+          location: params.location,
+          lost_found: params.lost_found,
+          new_inventory: true,
+          products_inventory: true}
       },
       {
         name: "Complete Inventory",
         page: new Routing().getNext(this.constructor.name),
-        params: {location:params.location, new_inventory:true, products_inventory: false}
+        params: {
+          location: params.location,
+          lost_found: params.lost_found,
+          new_inventory: true,
+          products_inventory: false}
       }
     ]
   }
